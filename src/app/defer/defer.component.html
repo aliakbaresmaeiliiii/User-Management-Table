@@ -1,0 +1,34 @@
+<div class="defer-container">
+  <div class="header">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Modern Angular Defer Gallery</h1>
+    <p class="text-gray-600 mb-8">Experience smooth image loading with Angular's modern features</p>
+  </div>
+
+  <div class="grid-container">
+    @for (image of images; track trackByImageId($index, image)) {
+      <div class="image-card">
+        <!-- Image with lazy loading and smooth transitions -->
+        <div class="image-wrapper">
+          <img 
+            [src]="image.src" 
+            [alt]="image.alt"
+            class="loaded-image"
+            loading="lazy"
+            (load)="onImageLoad($event)"
+            (error)="onImageError($event)"
+          >
+          <div class="image-overlay">
+            <h3 class="image-title">{{ image.title }}</h3>
+            <p class="image-description">{{ image.description }}</p>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Loading indicator for initial load -->
+  <div class="initial-loading" #initialLoading>
+    <div class="spinner large"></div>
+    <p>Preparing your gallery experience...</p>
+  </div>
+</div>

@@ -1,0 +1,136 @@
+<div class="user-table-container">
+  <!-- Loading Spinner -->
+  @if (isLoading()) {
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading users...</p>
+    </div>
+  } @else {
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search by name or email..."
+        (input)="onSearchInput($event)"
+        class="search-input"
+      />
+      <div class="search-info">
+        @if (searchTerm()) {
+          <span class="search-results">
+            Found {{ filteredUsers().length }} user{{ filteredUsers().length !== 1 ? 's' : '' }}
+            matching "{{ searchTerm() }}"
+          </span>
+        }
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            @for (column of columnDefinitions; track column.key) {
+              <th
+                [class.sortable]="column.sortable"
+                [class.active]="sortColumn() === column.key"
+                (click)="column.sortable ? toggleSort(column.key) : null"
+              >
+                <div class="header-content">
+                  <span>{{ column.label }}</span>
+                  @if (column.sortable) {
+                    <span class="sort-icon">{{ getSortIcon(column.key) }}</span>
+                  }
+                </div>
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @if (paginatedUsers().length === 0) {
+            <tr class="no-data">
+              <td [attr.colspan]="columnDefinitions.length">
+                @if (searchTerm()) {
+                  No users found matching "{{ searchTerm() }}"
+                } @else {
+                  No users available
+                }
+              </td>
+            </tr>
+          } @else {
+            @for (user of paginatedUsers(); track trackByUserId($index, user)) {
+              <tr>
+                @for (column of columnDefinitions; track column.key) {
+                  <td [class]="getCellClass(column)">
+                    @if (column.key === 'email') {
+                      <a [href]="'mailto:' + user[column.key]" class="email-link">
+                        {{ user[column.key] }}
+                      </a>
+                    } @else {
+                      {{ user[column.key] }}
+                    }
+                  </td>
+                }
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (paginatedUsers().length > 0) {
+      <div class="pagination-container">
+        <div class="pagination-info">
+          Showing {{ (currentPage() - 1) * pageSize() + 1 }} to
+          {{ min(currentPage() * pageSize(), sortedUsers().length) }} of
+          {{ sortedUsers().length }} user{{ sortedUsers().length !== 1 ? 's' : '' }}
+          (Page {{ currentPage() }} of {{ totalPages() }})
+        </div>
+
+        <div class="pagination-controls">
+          <button
+            class="pagination-button"
+            [disabled]="!hasPreviousPage()"
+            (click)="previousPage()"
+            [class.disabled]="!hasPreviousPage()"
+          >
+            Previous
+          </button>
+
+          <div class="page-numbers">
+            @for (page of [1, 2, 3, 4, 5]; track page) {
+              @if (page <= totalPages()) {
+                <button
+                  class="page-number"
+                  [class.active]="currentPage() === page"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              }
+            }
+            @if (totalPages() > 5) {
+              <span class="page-ellipsis">...</span>
+              <button
+                class="page-number"
+                [class.active]="currentPage() === totalPages()"
+                (click)="goToPage(totalPages())"
+              >
+                {{ totalPages() }}
+              </button>
+            }
+          </div>
+
+          <button
+            class="pagination-button"
+            [disabled]="!hasNextPage()"
+            (click)="nextPage()"
+            [class.disabled]="!hasNextPage()"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    }
+  }
+</div>

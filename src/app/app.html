@@ -1,0 +1,78 @@
+<div class="app-container">
+
+  <main class="app-main">
+    @if (currentView === 'table') {
+      <section class="demo-section">
+        <div class="section-header">
+          <h2>User Management Table</h2>
+          <p class="section-description">
+            This table demonstrates key Angular 21 features including reactive signals, 
+            computed values, RxJS debouncing, and template-driven UI.
+          </p>
+        </div>
+        
+        <div class="features-list">
+          <div class="feature">
+            <span class="feature-icon">🔍</span>
+            <div>
+              <h3>Search</h3>
+              <p>Real-time filtering with 300ms debounce</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">📊</span>
+            <div>
+              <h3>Sorting</h3>
+              <p>Click column headers to toggle sort order</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">📄</span>
+            <div>
+              <h3>Pagination</h3>
+              <p>5 users per page with navigation controls</p>
+            </div>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⚡</span>
+            <div>
+              <h3>Performance</h3>
+              <p>Signals for optimal change detection</p>
+            </div>
+          </div>
+        </div>
+
+        <app-user-table></app-user-table>
+      </section>
+    }
+
+    @if (currentView === 'gallery') {
+      <section class="demo-section">
+        <div class="section-header">
+          <h2>Gallery Component</h2>
+          <p class="section-description">
+            Example gallery component with multilingual support and theme switching.
+          </p>
+        </div>
+        <app-gallery></app-gallery>
+      </section>
+    }
+
+    @if (currentView === 'defer') {
+      <section class="demo-section">
+        <div class="section-header">
+          <h2>Defer Component</h2>
+          <p class="section-description">
+            Demonstration of Angular's defer functionality for lazy loading.
+          </p>
+        </div>
+        <app-defer></app-defer>
+      </section>
+    }
+  </main>
+
+  <footer class="app-footer">
+    <p>Built with Angular 21 • Demonstrating modern Angular patterns and best practices</p>
+    <p class="footer-note">Features implemented: Reactive Signals, RxJS, Template Control Flow, Standalone Components</p>
+  </footer>
+</div>
