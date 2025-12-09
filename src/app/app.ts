@@ -1,15 +1,14 @@
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule, TitleCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component
+  Component,
+  signal,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { DeferComponent } from './defer/defer.component';
-import { Repeat } from './directives/repeat';
-import { GalleryComponent } from './gallery/gallery.component';
 import { UserTableComponent } from './user-table/user-table.component';
+import { Todos } from './todos/todos';
 
 interface User {
   name: string;
@@ -29,17 +28,20 @@ interface TodoItem {
     ScrollingModule,
     CommonModule,
     UserTableComponent,
-    GalleryComponent,
-    DeferComponent
+    Todos,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
-  currentView: 'table' | 'gallery' | 'defer' = 'table';
+  isTodoList = signal<boolean>(false);
 
-  switchView(view: 'table' | 'gallery' | 'defer'): void {
-    this.currentView = view;
+  showTodoList() {
+    this.isTodoList.set(true);
+  }
+
+  showUserTable() {
+    this.isTodoList.set(false);
   }
 }

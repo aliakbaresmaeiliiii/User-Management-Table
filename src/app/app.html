@@ -1,78 +1,82 @@
 <div class="app-container">
+  <div class="flex gap-2">
+    <a
+      href="#"
+      (click)="showTodoList()"
+      class="flex justify-center items-center shadow-md w-64 h-12 bg-gray-200 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+    >
+      <div class="text-lg font-semibold tracking-wide">📰Todos list</div>
+    </a>
+    <a
+      href="#"
+      (click)="showUserTable()"
+      class="flex justify-center items-center shadow-md w-64 h-12 bg-gray-200 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+    >
+      <div class="text-lg font-semibold tracking-wide">
+        📰User Table Manager
+      </div>
+    </a>
+  </div>
 
-  <main class="app-main">
-    @if (currentView === 'table') {
-      <section class="demo-section">
-        <div class="section-header">
-          <h2>User Management Table</h2>
-          <p class="section-description">
-            This table demonstrates key Angular 21 features including reactive signals, 
-            computed values, RxJS debouncing, and template-driven UI.
-          </p>
-        </div>
-        
-        <div class="features-list">
-          <div class="feature">
-            <span class="feature-icon">🔍</span>
-            <div>
-              <h3>Search</h3>
-              <p>Real-time filtering with 300ms debounce</p>
-            </div>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">📊</span>
-            <div>
-              <h3>Sorting</h3>
-              <p>Click column headers to toggle sort order</p>
-            </div>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">📄</span>
-            <div>
-              <h3>Pagination</h3>
-              <p>5 users per page with navigation controls</p>
-            </div>
-          </div>
-          <div class="feature">
-            <span class="feature-icon">⚡</span>
-            <div>
-              <h3>Performance</h3>
-              <p>Signals for optimal change detection</p>
-            </div>
+  @if (!isTodoList()) {
+    <section class="demo-section">
+      <div class="section-header">
+        <h2>User Management Table</h2>
+        <p class="section-description">
+          This table demonstrates key Angular 21 features including reactive
+          signals, computed values, RxJS debouncing, and template-driven UI.
+        </p>
+      </div>
+
+      <div class="features-list">
+        <div class="feature">
+          <span class="feature-icon">🔍</span>
+          <div>
+            <h3>Search</h3>
+            <p>Real-time filtering with 300ms debounce</p>
           </div>
         </div>
-
-        <app-user-table></app-user-table>
-      </section>
-    }
-
-    @if (currentView === 'gallery') {
-      <section class="demo-section">
-        <div class="section-header">
-          <h2>Gallery Component</h2>
-          <p class="section-description">
-            Example gallery component with multilingual support and theme switching.
-          </p>
+        <div class="feature">
+          <span class="feature-icon">📊</span>
+          <div>
+            <h3>Sorting</h3>
+            <p>Click column headers to toggle sort order</p>
+          </div>
         </div>
-        <app-gallery></app-gallery>
-      </section>
-    }
-
-    @if (currentView === 'defer') {
-      <section class="demo-section">
-        <div class="section-header">
-          <h2>Defer Component</h2>
-          <p class="section-description">
-            Demonstration of Angular's defer functionality for lazy loading.
-          </p>
+        <div class="feature">
+          <span class="feature-icon">📄</span>
+          <div>
+            <h3>Pagination</h3>
+            <p>5 users per page with navigation controls</p>
+          </div>
         </div>
-        <app-defer></app-defer>
-      </section>
-    }
-  </main>
+        <div class="feature">
+          <span class="feature-icon">⚡</span>
+          <div>
+            <h3>Performance</h3>
+            <p>Signals for optimal change detection</p>
+          </div>
+        </div>
+      </div>
+
+      <app-user-table />
+    </section>
+  }
+
+  @if (isTodoList()) {
+    <section>
+      <app-todos></app-todos>
+    </section>
+  }
 
   <footer class="app-footer">
-    <p>Built with Angular 21 • Demonstrating modern Angular patterns and best practices</p>
-    <p class="footer-note">Features implemented: Reactive Signals, RxJS, Template Control Flow, Standalone Components</p>
+    <p>
+      Built with Angular 21 • Demonstrating modern Angular patterns and best
+      practices
+    </p>
+    <p class="footer-note">
+      Features implemented: Reactive Signals, RxJS, Template Control Flow,
+      Standalone Components
+    </p>
   </footer>
 </div>

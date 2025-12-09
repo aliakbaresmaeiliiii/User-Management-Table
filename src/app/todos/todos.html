@@ -1,0 +1,59 @@
+<div class="todos-container">
+  <h1>Todo List</h1>
+  
+  <div class="add-todo">
+    <input 
+      type="text" 
+      [(ngModel)]="newTitle" 
+      placeholder="What needs to be done?"
+      (keyup.enter)="add()"
+      class="todo-input"
+    />
+    <button (click)="add()" class="add-button">Add</button>
+  </div>
+
+  @if (loading$ | async) {
+    <div class="loading">Loading todos...</div>
+  }
+
+  @if (todos$ | async; as todos) {
+    @if (todos.length === 0) {
+      <div class="empty-state">
+        No todos yet. Add one above!
+      </div>
+    }
+
+    <ul class="todo-list">
+      @for (todo of todos; track todo.id) {
+        <li class="todo-item">
+          <div class="todo-content">
+            <input 
+              type="checkbox" 
+              [checked]="todo.completed"
+              (change)="toggle(todo)"
+              class="todo-checkbox"
+            />
+            <span 
+              [class.completed]="todo.completed"
+              class="todo-title"
+            >
+              {{ todo.title }}
+            </span>
+          </div>
+          <button 
+            (click)="delete(todo)"
+            class="delete-button"
+          >
+            Delete
+          </button>
+        </li>
+      }
+    </ul>
+
+    @if (todos.length > 0) {
+      <div class="stats">
+        {{ todos.length }} todo{{ todos.length !== 1 ? 's' : '' }} total
+      </div>
+    }
+  }
+</div>
